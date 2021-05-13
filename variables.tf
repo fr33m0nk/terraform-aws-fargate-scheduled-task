@@ -56,9 +56,9 @@ variable "inline_policy_document" {
   default     = ""
 }
 
-variable "cluster_id" {
+variable "cluster_arn" {
   type        = string
-  description = "The ID of the Fargate cluster where this task should be run."
+  description = "The ARN of the Fargate cluster where this task should be run."
 }
 
 variable "subnet_ids" {
@@ -68,5 +68,5 @@ variable "subnet_ids" {
 
 variable "cron" {
   type        = string
-  description = "A valid cron expression. `rate` expressions are not supported. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html"
+  description = "A valid cron expression. AWS uses UTC time for cron expressions. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html"
 }

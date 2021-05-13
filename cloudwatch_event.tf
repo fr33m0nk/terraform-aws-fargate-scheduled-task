@@ -2,7 +2,7 @@ resource "aws_cloudwatch_event_target" "default" {
   target_id = "${var.name}-target"
   rule      = aws_cloudwatch_event_rule.default.name
 
-  arn      = var.cluster_id
+  arn      = var.cluster_arn
   role_arn = aws_iam_role.event.arn
 
   ecs_target {

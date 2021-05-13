@@ -12,6 +12,7 @@ resource "aws_ecs_task_definition" "default" {
 }
 
 locals {
+  ecs_role_arn = length(var.ecs_role_arn) == 0 ? module.ecs_execution_role.ecs_role_arn : var.ecs_role_arn
   container_definitions = [
     {
       name        = var.name
@@ -27,25 +28,43 @@ locals {
         options = {
           awslogs-region        = data.aws_region.current.name
           awslogs-group         = aws_cloudwatch_log_group.default.name
-          awslogs-stream-prefix = "fargate"
+          awslogs-stream-prefix = "cron"
         }
       }
     }
   ]
 }
 
+module "ecs_execution_role" {
+  source      = "aisamji/ecs-execution-role/aws"
+  version     = "1.0.0"
+  create_role = length(var.ecs_role_arn) == 0
+}
+
 data "aws_region" "current" {}
 
 resource "aws_cloudwatch_log_group" "default" {
-  name = "/aws/ecs/"
+  name = "/aws/ecs/${var.name}"
   tags = var.tags
 }
 
 resource "aws_iam_role" "task" {
   name                  = "${var.name}TaskRole"
-  assume_role_policy    = data.aws_iam_policy_document.ecs_assume_role.json
+  assume_role_policy    = data.aws_iam_policy_document.task_assume_role.json
   force_detach_policies = true
   tags                  = var.tags
+}
+
+data "aws_iam_policy_document" "task_assume_role" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "task_managed" {
