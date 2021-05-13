@@ -55,3 +55,18 @@ variable "inline_policy_document" {
   description = "An inline policy document in JSON format to determine additional task permissions."
   default     = ""
 }
+
+variable "cluster_id" {
+  type        = string
+  description = "The ID of the Fargate cluster where this task should be run."
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  description = "The task will be launched with an ENI connected to one of the subnets."
+}
+
+variable "cron" {
+  type        = string
+  description = "A valid cron expression. `rate` expressions are not supported. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html"
+}

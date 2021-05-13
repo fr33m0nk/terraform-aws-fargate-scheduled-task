@@ -57,6 +57,6 @@ resource "aws_iam_role_policy_attachment" "task_managed" {
 resource "aws_iam_role_policy" "task_inline" {
   count  = length(var.inline_policy_document) == 0 ? 0 : 1
   role   = aws_iam_role.task.id
-  name   = "CustomInlinePolicy"
+  name   = "CustomTaskPermissions"
   policy = var.inline_policy_document
 }
