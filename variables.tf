@@ -11,13 +11,13 @@ variable "tags" {
 
 variable "cpu" {
   type        = number
-  description = "The number of CPU units avaialble to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html"
+  description = "The number of CPU units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html"
   default     = 256
 }
 
 variable "memory" {
   type        = number
-  description = "The number of memory units avaialble to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html"
+  description = "The number of memory units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html"
   default     = 512
 }
 
@@ -42,4 +42,16 @@ variable "secrets" {
   type        = map(string)
   description = "A map of secret environment variables in 'name = sourceARN' format. Source ARN can reference AWS Secrets Manager or AWS Parameter Store."
   default     = {}
+}
+
+variable "managed_policy_arns" {
+  type        = list(string)
+  description = "A list of ARNs for managed policies to determine the task permissions."
+  default     = []
+}
+
+variable "inline_policy_document" {
+  type        = string
+  description = "An inline policy document in JSON format to determine additional task permissions."
+  default     = ""
 }

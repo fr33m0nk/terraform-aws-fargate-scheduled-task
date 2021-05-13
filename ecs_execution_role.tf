@@ -11,10 +11,11 @@ data "aws_iam_policy_document" "ecs_assume_role" {
 }
 
 resource "aws_iam_role" "ecs_execution" {
-  count              = length(var.ecs_role_arn) == 0 ? 1 : 0
-  name               = "${var.name}ECSExecutionRole"
-  assume_role_policy = data.aws_iam_policy_document.ecs_assume_role.json
-  tags               = var.tags
+  count                 = length(var.ecs_role_arn) == 0 ? 1 : 0
+  name                  = "${var.name}ECSExecutionRole"
+  assume_role_policy    = data.aws_iam_policy_document.ecs_assume_role.json
+  force_detach_policies = true
+  tags                  = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_execution" {
