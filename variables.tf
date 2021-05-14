@@ -27,6 +27,12 @@ variable "ecs_role_arn" {
   default     = ""
 }
 
+variable "create_ecs_role" {
+  type        = bool
+  description = "A value indicating whether to create an ECS execution role by default."
+  default     = false
+}
+
 variable "image" {
   type        = string
   description = "The image repository and tag in the format <repository>:<tag>."

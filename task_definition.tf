@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "default" {
 }
 
 locals {
-  ecs_role_arn = length(var.ecs_role_arn) == 0 ? module.ecs_execution_role.ecs_role_arn : var.ecs_role_arn
+  ecs_role_arn = var.create_ecs_role ? module.ecs_execution_role.ecs_role_arn : var.ecs_role_arn
   container_definitions = [
     {
       name        = var.name
@@ -38,7 +38,7 @@ locals {
 module "ecs_execution_role" {
   source      = "aisamji/ecs-execution-role/aws"
   version     = "1.0.0"
-  create_role = length(var.ecs_role_arn) == 0
+  create_role = var.create_ecs_role
 }
 
 data "aws_region" "current" {}

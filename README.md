@@ -75,6 +75,7 @@ While it is possible to have the module create this role for you, it would be be
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | The ARN of the Fargate cluster where this task should be run. | `string` | n/a | yes |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | `number` | `256` | no |
+| <a name="input_create_ecs_role"></a> [create\_ecs\_role](#input\_create\_ecs\_role) | A value indicating whether to create an ECS execution role by default. | `bool` | `false` | no |
 | <a name="input_cron"></a> [cron](#input\_cron) | A valid cron expression. AWS uses UTC time for cron expressions. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html | `string` | n/a | yes |
 | <a name="input_ecs_role_arn"></a> [ecs\_role\_arn](#input\_ecs\_role\_arn) | The ARN of the role used by ECS to pull the docker image and send logs to CloudWatch. If not specified, the module will create an appropriate role. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | A map of environment variables in 'name = value' format. | `map(string)` | `{}` | no |
