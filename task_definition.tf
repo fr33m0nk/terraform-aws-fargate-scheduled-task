@@ -8,31 +8,39 @@ resource "aws_ecs_task_definition" "default" {
   execution_role_arn       = local.ecs_role_arn
   task_role_arn            = aws_iam_role.task.arn
   network_mode             = "awsvpc"
-  container_definitions    = jsonencode(local.container_definitions)
+  container_definitions    = jsonencode([local.merged_container_definition])
 }
 
 locals {
   ecs_role_arn = var.create_ecs_role ? module.ecs_execution_role.ecs_role_arn : var.ecs_role_arn
-  container_definitions = [
-    {
-      name        = var.name
-      essential   = true
-      image       = var.image
-      cpu         = var.cpu
-      memory      = var.memory
-      environment = [for k, v in var.environment : { name = k, value = v }]
-      secrets     = [for k, arn in var.secrets : { name = k, valueFrom = arn }]
 
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-region        = data.aws_region.current.name
-          awslogs-group         = aws_cloudwatch_log_group.default.name
-          awslogs-stream-prefix = "cron"
-        }
+  base_container_definition = {
+    name        = var.name
+    essential   = true
+    image       = var.image
+    cpu         = var.cpu
+    memory      = var.memory
+    environment = [for k, v in var.environment : { name = k, value = v }]
+    secrets     = [for k, arn in var.secrets : { name = k, valueFrom = arn }]
+
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-region        = data.aws_region.current.name
+        awslogs-group         = aws_cloudwatch_log_group.default.name
+        awslogs-stream-prefix = "cron"
       }
     }
-  ]
+  }
+
+  command_override_definition = length(var.command_override) == 0 ? {} : {
+    command = split(" ", var.command_override)
+  }
+
+  merged_container_definition = merge(
+    local.base_container_definition,
+    local.command_override_definition
+  )
 }
 
 module "ecs_execution_role" {

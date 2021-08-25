@@ -76,3 +76,15 @@ variable "cron" {
   type        = string
   description = "A valid cron expression. AWS uses UTC time for cron expressions. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html"
 }
+
+variable "command_override" {
+  type        = string
+  description = "The arguments to pass to the image entrypoint instead of the defaults."
+  default     = ""
+}
+
+variable "security_group_ids" {
+  type        = list(string)
+  description = "A list of security groups that the runner will be a member of."
+  default     = []
+}

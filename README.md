@@ -43,7 +43,7 @@ While it is possible to have the module create this role for you, it would be be
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.24.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 2.24.0 |
 
 ## Modules
 
@@ -74,6 +74,7 @@ While it is possible to have the module create this role for you, it would be be
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_arn"></a> [cluster\_arn](#input\_cluster\_arn) | The ARN of the Fargate cluster where this task should be run. | `string` | n/a | yes |
+| <a name="input_command_override"></a> [command\_override](#input\_command\_override) | The arguments to pass to the image entrypoint instead of the defaults. | `string` | `""` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | `number` | `256` | no |
 | <a name="input_create_ecs_role"></a> [create\_ecs\_role](#input\_create\_ecs\_role) | A value indicating whether to create an ECS execution role by default. | `bool` | `false` | no |
 | <a name="input_cron"></a> [cron](#input\_cron) | A valid cron expression. AWS uses UTC time for cron expressions. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html | `string` | n/a | yes |
@@ -85,6 +86,7 @@ While it is possible to have the module create this role for you, it would be be
 | <a name="input_memory"></a> [memory](#input\_memory) | The number of memory units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | `number` | `512` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name that will be used for the resources created. | `string` | n/a | yes |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | A map of secret environment variables in 'name = sourceARN' format. Source ARN can reference AWS Secrets Manager or AWS Parameter Store. | `map(string)` | `{}` | no |
+| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | A list of security groups that the runner will be a member of. | `list(string)` | `[]` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The task will be launched with an ENI connected to one of the subnets. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | The tags to apply to all created resources. | `map(string)` | `{}` | no |
 
