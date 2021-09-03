@@ -27,7 +27,7 @@ locals {
       logDriver = "awslogs"
       options = {
         awslogs-region        = data.aws_region.current.name
-        awslogs-group         = aws_cloudwatch_log_group.default.name
+        awslogs-group         = local.log_group_name
         awslogs-stream-prefix = "cron"
       }
     }
@@ -51,9 +51,14 @@ module "ecs_execution_role" {
 
 data "aws_region" "current" {}
 
+locals {
+  log_group_name = coalesce(var.log_group_name, "/aws/ecs/${var.name}")
+}
+
 resource "aws_cloudwatch_log_group" "default" {
-  name = "/aws/ecs/${var.name}"
-  tags = var.tags
+  count = var.create_log_group ? 1 : 0
+  name  = local.log_group_name
+  tags  = var.tags
 }
 
 resource "aws_iam_role" "task" {

@@ -77,11 +77,13 @@ While it is possible to have the module create this role for you, it would be be
 | <a name="input_command_override"></a> [command\_override](#input\_command\_override) | The arguments to pass to the image entrypoint instead of the defaults. | `string` | `""` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | `number` | `256` | no |
 | <a name="input_create_ecs_role"></a> [create\_ecs\_role](#input\_create\_ecs\_role) | A value indicating whether to create an ECS execution role by default. | `bool` | `false` | no |
+| <a name="input_create_log_group"></a> [create\_log\_group](#input\_create\_log\_group) | A value indicating whether to create the log group or assume that it has been created externally. | `bool` | `true` | no |
 | <a name="input_cron"></a> [cron](#input\_cron) | A valid cron expression. AWS uses UTC time for cron expressions. https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html | `string` | n/a | yes |
 | <a name="input_ecs_role_arn"></a> [ecs\_role\_arn](#input\_ecs\_role\_arn) | The ARN of the role used by ECS to pull the docker image and send logs to CloudWatch. If not specified, the module will create an appropriate role. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | A map of environment variables in 'name = value' format. | `map(string)` | `{}` | no |
 | <a name="input_image"></a> [image](#input\_image) | The image repository and tag in the format <repository>:<tag>. | `string` | n/a | yes |
 | <a name="input_inline_policy_document"></a> [inline\_policy\_document](#input\_inline\_policy\_document) | An inline policy document in JSON format to determine additional task permissions. | `string` | `""` | no |
+| <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | The name of the log group to create/use to stores logs from the task. | `string` | `null` | no |
 | <a name="input_managed_policy_arns"></a> [managed\_policy\_arns](#input\_managed\_policy\_arns) | A list of ARNs for managed policies to determine the task permissions. | `list(string)` | `[]` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The number of memory units available to this task. See the list of valid configurations: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html | `number` | `512` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name that will be used for the resources created. | `string` | n/a | yes |

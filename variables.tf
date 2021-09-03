@@ -88,3 +88,15 @@ variable "security_group_ids" {
   description = "A list of security groups that the runner will be a member of."
   default     = []
 }
+
+variable "log_group_name" {
+  type        = string
+  description = "The name of the log group to create/use to stores logs from the task."
+  default     = null
+}
+
+variable "create_log_group" {
+  type        = bool
+  description = "A value indicating whether to create the log group or assume that it has been created externally."
+  default     = true
+}
