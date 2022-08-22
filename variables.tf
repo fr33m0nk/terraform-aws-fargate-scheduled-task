@@ -107,5 +107,5 @@ variable "cpu_architecture" {
 }
 variable "operating_system" {
   type    = string
-  default = "Must be one of https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#runtime-platform"
+  description = "Must be one of https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#runtime-platform"
 }
