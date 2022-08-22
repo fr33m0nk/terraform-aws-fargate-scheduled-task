@@ -100,3 +100,12 @@ variable "create_log_group" {
   description = "A value indicating whether to create the log group or assume that it has been created externally."
   default     = true
 }
+
+variable "cpu_architecture" {
+  type        = string
+  description = "CPU architecture for the task. Must be set to either X86_64 or ARM64"
+}
+variable "operating_system" {
+  type = string
+  default = "Must be one of https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#runtime-platform"
+}
