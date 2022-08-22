@@ -106,6 +106,6 @@ variable "cpu_architecture" {
   description = "CPU architecture for the task. Must be set to either X86_64 or ARM64"
 }
 variable "operating_system" {
-  type = string
+  type    = string
   default = "Must be one of https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#runtime-platform"
 }
