@@ -29,7 +29,7 @@ resource "aws_cloudwatch_log_group" "default" {
 }
 
 resource "aws_iam_role" "task" {
-  name                  = "${var.name}_Task_Role"
+  name                  = "${var.name}_task_role"
   assume_role_policy    = data.aws_iam_policy_document.task_assume_role.json
   force_detach_policies = true
   tags                  = var.tags
@@ -44,6 +44,6 @@ resource "aws_iam_role_policy_attachment" "task_managed" {
 resource "aws_iam_role_policy" "task_inline" {
   count  = length(var.inline_policy_document) == 0 ? 0 : 1
   role   = aws_iam_role.task.id
-  name   = "CustomTaskPermissions"
+  name   = "ECS_custom_task_permissions"
   policy = var.inline_policy_document
 }

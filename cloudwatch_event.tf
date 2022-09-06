@@ -19,45 +19,19 @@ resource "aws_cloudwatch_event_target" "default" {
 }
 
 resource "aws_cloudwatch_event_rule" "default" {
-  name                = "${var.name}Schedule"
+  name                = "${var.name}_schedule"
   tags                = var.tags
   schedule_expression = "cron(${var.cron})"
 }
 
 resource "aws_iam_role" "event" {
-  name               = "${var.name}EventRole"
+  name               = "${var.name}_event_role"
   assume_role_policy = data.aws_iam_policy_document.event_assume_role.json
   tags               = var.tags
 }
 
-data "aws_iam_policy_document" "event_assume_role" {
-  statement {
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["events.amazonaws.com"]
-    }
-  }
-}
-
 resource "aws_iam_role_policy" "ecs_run_task" {
   role   = aws_iam_role.event.id
-  name   = "ECSRunTask${var.name}"
+  name   = "ECS_run_task_${var.name}"
   policy = data.aws_iam_policy_document.ecs_run_task.json
-}
-
-data "aws_iam_policy_document" "ecs_run_task" {
-  statement {
-    effect    = "Allow"
-    actions   = ["iam:PassRole"]
-    resources = ["*"]
-  }
-
-  statement {
-    effect    = "Allow"
-    actions   = ["ecs:RunTask"]
-    resources = [replace(aws_ecs_task_definition.default.arn, "/:\\d+$/", ":*")]
-  }
 }
